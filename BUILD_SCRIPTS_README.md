@@ -107,8 +107,8 @@ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 ## Localização do Executável
 
 Após a compilação bem-sucedida, o executável será gerado em:
-- **Release**: `build/src/canary.exe`
-- **Debug**: `build/src/canary-debug.exe`
+- **Release**: `build/bin/Release/canary.exe` e copiado para `canary.exe` (pasta raiz)
+- **Debug**: `build/bin/Debug/canary.exe` e copiado para `canary-debug.exe` (pasta raiz)
 
 ## Troubleshooting
 

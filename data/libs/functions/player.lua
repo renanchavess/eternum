@@ -342,9 +342,9 @@ function Player.getFinalBonusStamina(self)
 	local staminaBonus = 1
 	if configManager.getBoolean(configKeys.STAMINA_SYSTEM) then
 		local staminaMinutes = self:getStamina()
-		if staminaMinutes > 2340 and self:isPremium() then
+		if staminaMinutes > 2400 and self:isPremium() then
 			staminaBonus = 1.5
-		elseif staminaMinutes <= 840 then
+		elseif staminaMinutes <= 900 then
 			staminaBonus = 0.5
 		end
 	end
@@ -686,7 +686,7 @@ function Player.loadDailyRewardBonuses(self)
 		local staminaEvent = DailyRewardBonus.Stamina[self:getId()]
 		if not staminaEvent then
 			local delay = 3
-			if self:getStamina() > 2340 and self:getStamina() <= 2520 then
+			if self:getStamina() > 2400 and self:getStamina() <= 2520 then
 				delay = 6
 			end
 			DailyRewardBonus.Stamina[self:getId()] = addEvent(RegenStamina, delay * 60 * 1000, self:getId(), delay * 60 * 1000)

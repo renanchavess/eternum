@@ -23,7 +23,7 @@ function RegenStamina(id, delay)
 	end
 	if player:getTile():hasFlag(TILESTATE_PROTECTIONZONE) then
 		local actualStamina = player:getStamina()
-		if actualStamina > 2340 and actualStamina < 2520 then
+		if actualStamina > 2400 and actualStamina < 2520 then
 			delay = 6 * 60 * 1000 -- Bonus stamina
 		end
 		if actualStamina < 2520 then
