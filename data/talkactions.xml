@@ -1,0 +1,3 @@
+<talkactions>
+    <talkaction words="/ai_paladin" script="god/ai_paladin.lua" access="5" />
+</talkactions>
