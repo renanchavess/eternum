@@ -37,6 +37,32 @@ function Player.hasFlag(self, flag)
 	return self:getGroup():hasFlag(flag)
 end
 
+
+-- Premium types: none, bronze, gold, platinum
+function Player.getPremiumType(self)
+	-- platinum tem prioridade sobre gold, gold sobre bronze
+	if self:getStorageValue(90001) == 2 then
+		return "platinum"
+	elseif self:getStorageValue(90001) == 1 then
+		return "gold"
+	elseif self:isPremium() then
+		return "bronze" -- fallback: premium comum, sem benefícios extras
+	else
+		return "none"
+	end
+end
+
+function Player.setPremiumType(self, premiumType)
+	-- premiumType: "none", "gold", "platinum"
+	if premiumType == "platinum" then
+		self:setStorageValue(90001, 2)
+	elseif premiumType == "gold" then
+		self:setStorageValue(90001, 1)
+	else
+		self:setStorageValue(90001, -1)
+	end
+end
+
 function Player.isPremium(self)
 	return self:getPremiumDays() > 0 or configManager.getBoolean(configKeys.FREE_PREMIUM)
 end
@@ -338,11 +364,20 @@ function Player.getFinalBaseRateExperience(self)
 	return baseRate
 end
 
+
 function Player.getFinalBonusStamina(self)
 	local staminaBonus = 1
 	if configManager.getBoolean(configKeys.STAMINA_SYSTEM) then
 		local staminaMinutes = self:getStamina()
-		if staminaMinutes > 2400 and self:isPremium() then
+		local premiumType = self:getPremiumType()
+		local greenLimit = 2400
+		if premiumType == "gold" then
+			greenLimit = 150
+		elseif premiumType == "platinum" then
+			greenLimit = 180
+		end
+		greenLimit = greenLimit * 10 -- converte minutos para o sistema do OT (10x)
+		if staminaMinutes > greenLimit and self:isPremium() then
 			staminaBonus = 1.5
 		elseif staminaMinutes <= 900 then
 			staminaBonus = 0.5
