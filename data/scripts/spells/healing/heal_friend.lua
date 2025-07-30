@@ -7,6 +7,12 @@ combat:setParameter(COMBAT_PARAM_AGGRESSIVE, false)
 function onGetFormulaValues(player, level, magicLevel)
 	local min = (level * 0.2 + magicLevel * 10) + 3
 	local max = (level * 0.2 + magicLevel * 14) + 5
+	-- Reduzir cura para sorcerer/master sorcerer
+	local vocationId = player:getVocation():getId()
+	if vocationId == VOCATION.ID.SORCERER or vocationId == VOCATION.ID.MASTER_SORCERER then
+		min = min * 0.7
+		max = max * 0.7
+	end
 	return min, max
 end
 
@@ -22,7 +28,7 @@ end
 spell:name("Heal Friend")
 spell:words("exura sio")
 spell:group("healing")
-spell:vocation("druid;true", "elder druid;true")
+spell:vocation("druid;true", "elder druid;true", "sorcerer;true", "master sorcerer;true")
 spell:castSound(SOUND_EFFECT_TYPE_SPELL_HEAL_FRIEND)
 spell:id(84)
 spell:cooldown(1000)
